@@ -1,0 +1,22 @@
+.vat-input input {
+  all: unset;
+  font-size: 5em;
+  color: #61dafb;
+  text-transform: uppercase;
+  width: 80%;
+  margin: 0 10%;
+}
+
+.vat-input input::placeholder {
+  color: #61dafb;
+  opacity: 0.2;
+  text-transform: none;
+}
+
+.positive {
+  color: #29b694;
+}
+
+.negative {
+  color: #a90000;
+}
