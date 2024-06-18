@@ -89,6 +89,34 @@ const valueIsValid = (value) => {
    */
 
   // TODO: Implement the validation logic for UK VAT numbers. Return true if the value is valid, return false if the value is not.
+  const sanitisedValue = [...value].filter(o => !isNaN(o) && o !== " ");
+  console.log({value, sanitisedValue});
+  
+  if (sanitisedValue.length !== 9) {
+    return false;
+  }
 
-  return undefined;
-};
+  let valid = false;
+  let num1 = sanitisedValue[0] * 8;
+  let num2 = sanitisedValue[1] * 7;
+  let num3 = sanitisedValue[2] * 6;
+  let num4 = sanitisedValue[3] * 5;
+  let num5 = sanitisedValue[4] * 4;
+  let num6 = sanitisedValue[5] * 3;
+  let num7 = sanitisedValue[6] * 2;
+  let bignum = num1 + num2 + num3 + num4 + num5 + num6 + num7;
+
+  while (bignum > -1) {
+      bignum -= 97;
+  }
+
+  bignum *= -1;
+  
+  let lastnum = parseInt(sanitisedValue[7] + sanitisedValue[8]);
+
+  if (bignum === lastnum) {
+    valid = true;
+  }
+
+  return valid;
+  };
