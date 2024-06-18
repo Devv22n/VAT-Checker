@@ -70,25 +70,33 @@ export const VATChecker = () => {
 };
 
 const valueIsValid = (value) => {
-  /*
-   * For UK VAT numbers do the following exercise: Excluding the first two letters, list the numbers vertically and multiply each by a value starting with 8 and ending with 2. Then add up all the sums you have and deduct 97 from the sum until the answer is negative. The negative sum should be equal to the last 2 digits of the VAT number.
-   *
-   * So for example, the VAT number for HSBC bank is GB 365684514 the calculation is:
-   *    3 x 8 = 24
-   *    6 x 7 = 42
-   *    5 x 6 = 30
-   *    6 x 5 = 30
-   *    8 x 4 = 32
-   *    4 x 3 = 12
-   *    5 x 2 = 10
-   *
-   * The total of the above calculation is 24+42+30+30+32+12+10=180.
-   *
-   * Deduct 97 until the result is negative (in this case you will deduct 97 twice).
-   * For this example the result is 180-97-97=-14 which is the same as the last two digits so the VAT number is valid.
-   */
+  const sanitisedValue = [...value].filter(o => !isNaN(o) && o !== " ");
 
-  // TODO: Implement the validation logic for UK VAT numbers. Return true if the value is valid, return false if the value is not.
+  if (sanitisedValue.length !== 9) {
+    return false;
+  }
 
-  return undefined;
-};
+  let valid = false;
+  let num1 = sanitisedValue[0] * 8;
+  let num2 = sanitisedValue[1] * 7;
+  let num3 = sanitisedValue[2] * 6;
+  let num4 = sanitisedValue[3] * 5;
+  let num5 = sanitisedValue[4] * 4;
+  let num6 = sanitisedValue[5] * 3;
+  let num7 = sanitisedValue[6] * 2;
+  let bignum = num1 + num2 + num3 + num4 + num5 + num6 + num7;
+
+  while (bignum > -1) {
+      bignum -= 97;
+  }
+
+  bignum *= -1;
+  
+  let lastnum = parseInt(sanitisedValue[7] + sanitisedValue[8]);
+
+  if (bignum === lastnum) {
+    valid = true;
+  }
+
+  return valid;
+  };
